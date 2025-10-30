@@ -24,7 +24,6 @@ C:\Users\hanrr\OneDrive\ProjectsC#\OneDrive\Projetos C#\InstMiggD\InstMiggD\obj\
 C:\Users\hanrr\OneDrive\ProjectsC#\OneDrive\Projetos C#\InstMiggD\InstMiggD\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\Users\hanrr\OneDrive\ProjectsC#\OneDrive\Projetos C#\InstMiggD\InstMiggD\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\hanrr\OneDrive\ProjectsC#\OneDrive\Projetos C#\InstMiggD\InstMiggD\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-C:\Users\hanrr\OneDrive\ProjectsC#\OneDrive\Projetos C#\InstMiggD\InstMiggD\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\hanrr\OneDrive\ProjectsC#\OneDrive\Projetos C#\InstMiggD\InstMiggD\obj\Debug\net8.0\InstMiggD.dll
 C:\Users\hanrr\OneDrive\ProjectsC#\OneDrive\Projetos C#\InstMiggD\InstMiggD\obj\Debug\net8.0\refint\InstMiggD.dll
 C:\Users\hanrr\OneDrive\ProjectsC#\OneDrive\Projetos C#\InstMiggD\InstMiggD\obj\Debug\net8.0\InstMiggD.pdb
@@ -167,3 +166,5 @@ C:\Users\hanrr\OneDrive\ProjectsC#\OneDrive\Projetos C#\InstMiggD\InstMiggD\bin\
 C:\Users\hanrr\OneDrive\ProjectsC#\OneDrive\Projetos C#\InstMiggD\InstMiggD\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 C:\Users\hanrr\OneDrive\ProjectsC#\OneDrive\Projetos C#\InstMiggD\InstMiggD\obj\Debug\net8.0\InstMiggD.csproj.AssemblyReference.cache
 C:\Users\hanrr\OneDrive\ProjectsC#\OneDrive\Projetos C#\InstMiggD\InstMiggD\obj\Debug\net8.0\InstMiggD.csproj.Up2Date
+C:\Users\hanrr\OneDrive\ProjectsC#\OneDrive\Projetos C#\InstMiggD\InstMiggD\obj\Debug\net8.0\InstMiggD.sourcelink.json
+C:\Users\hanrr\OneDrive\ProjectsC#\OneDrive\Projetos C#\InstMiggD\InstMiggD\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
