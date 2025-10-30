@@ -1,0 +1,91 @@
+﻿@page "/cadastro"
+@using InstMiggD.Entities
+@using InstMiggD.Services
+@inject IClientService ClientService
+@rendermode InteractiveServer
+
+<h3>Cadastro de Clientes</h3>
+<hr />
+
+<EditForm Model="@client" OnValidSubmit="@SalvarCliente">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group mb-3">
+        <label for="name">Nome do Cliente</label>
+        <InputText id="name" class="form-control" @bind-Value="client.Name" />
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="seller">Vendedor</label>
+        <InputText id="seller" class="form-control" @bind-Value="client.CreatedBy" />
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="type">Tipo de Cliente</label>
+        <InputSelect id="type" class="form-control" @bind-Value="client.Type">
+            <option value="">Selecione...</option>
+            <option value="@ClientType.Instalacao">Instalação</option>
+            <option value="@ClientType.Migracao">Migração</option>
+        </InputSelect>
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="date">Data</label>
+        <InputDate id="date" class="form-control" @bind-Value="client.CreatedAt" />
+    </div>
+
+    @if (client.Type == ClientType.Instalacao)
+    {
+        <div class="form-group mb-3">
+            <label for="price">Valor do Contrato</label>
+            <InputNumber id="price" class="form-control" @bind-Value="client.Price" />
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="contract">Contrato</label>
+            <InputText id="contract" class="form-control" @bind-Value="client.Contract" />
+        </div>
+    }
+    else if (client.Type == ClientType.Migracao)
+    {
+        <div class="form-group mb-3">
+            <label for="newPrice">Novo Valor do Contrato</label>
+            <InputNumber id="newPrice" class="form-control" @bind-Value="client.NewPrice" />
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="newContract">Novo Contrato</label>
+            <InputText id="newContract" class="form-control" @bind-Value="client.NewContract" />
+        </div>
+    }
+
+    <hr />
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
+</EditForm>
+
+@if (mensagem is not null)
+{
+    <p class="mt-3 text-success">@mensagem</p>
+}
+
+@code {
+    private Client client = new();
+    private string? mensagem;
+
+    private async Task SalvarCliente()
+    {
+        try
+        {
+            await ClientService.CreateClientAsync(client);
+            mensagem = "Cliente salvo com sucesso!";
+            client = new Client();
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            mensagem = $"Erro ao salvar: {ex.Message}";
+        }
+    }
+}
