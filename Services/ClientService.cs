@@ -70,10 +70,24 @@ namespace InstMiggD.Services
 
             if (trackedEntry != null)
             {
-                // Se já existe uma entidade rastreada, atualize seus valores
+                // Atualiza os valores do objeto rastreado
                 trackedEntry.CurrentValues.SetValues(client);
+
+                // Limpa os campos que não se aplicam ao tipo atual
+                var entity = (Client)trackedEntry.Entity;
+                if (entity.Type == ClientType.Instalacao)
+                {
+                    entity.NewPrice = 0;
+                    entity.NewContract = null;
+                }
+                else if (entity.Type == ClientType.Migracao)
+                {
+                    entity.Price = 0;
+                    entity.Contract = null;
+                }
+
                 await _context.SaveChangesAsync();
-                return (Client)trackedEntry.Entity;
+                return entity;
             }
 
             // Caso não haja uma instância rastreada, carregue a existente do banco
@@ -85,6 +99,19 @@ namespace InstMiggD.Services
 
             // Copia os valores do DTO para a entidade rastreada
             _context.Entry(existing).CurrentValues.SetValues(client);
+
+            // Limpa os campos que não se aplicam ao tipo atual (usando existing, que já está rastreado)
+            if (existing.Type == ClientType.Instalacao)
+            {
+                existing.NewPrice = 0;
+                existing.NewContract = null;
+            }
+            else if (existing.Type == ClientType.Migracao)
+            {
+                existing.Price = 0;
+                existing.Contract = null;
+            }
+
             await _context.SaveChangesAsync();
             return existing;
         }

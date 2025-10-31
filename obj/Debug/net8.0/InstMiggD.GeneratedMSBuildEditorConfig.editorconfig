@@ -39,10 +39,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDYWRhc3Ryby5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/hanrr/OneDrive/ProjectsC\#/OneDrive/Projetos C\#/InstMiggD/InstMiggD/Components/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb3VudGVyLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/hanrr/OneDrive/ProjectsC\#/OneDrive/Projetos C\#/InstMiggD/InstMiggD/Components/Pages/Error.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFcnJvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -53,10 +49,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/hanrr/OneDrive/ProjectsC\#/OneDrive/Projetos C\#/InstMiggD/InstMiggD/Components/Pages/Pesquisa.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQZXNxdWlzYS5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/hanrr/OneDrive/ProjectsC\#/OneDrive/Projetos C\#/InstMiggD/InstMiggD/Components/Pages/Weather.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xXZWF0aGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/hanrr/OneDrive/ProjectsC\#/OneDrive/Projetos C\#/InstMiggD/InstMiggD/Components/Routes.razor]
