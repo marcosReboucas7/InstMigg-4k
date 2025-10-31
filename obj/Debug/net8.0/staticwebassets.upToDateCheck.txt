@@ -3,4 +3,5 @@ wwwroot\bootstrap\bootstrap.min.css
 wwwroot\bootstrap\bootstrap.min.css.map
 wwwroot\favicon.png
 wwwroot\img\instMiggLogo.jpeg
+wwwroot\img\logo.png
 wwwroot\img\style.css
