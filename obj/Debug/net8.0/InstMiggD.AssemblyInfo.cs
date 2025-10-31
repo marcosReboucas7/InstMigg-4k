@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("InstMiggD")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7dd5bc3758bec8c76ee8b86ccf76d1beab6796bb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c43a77f762a0576c477be64aa8de92a1e93de092")]
 [assembly: System.Reflection.AssemblyProductAttribute("InstMiggD")]
 [assembly: System.Reflection.AssemblyTitleAttribute("InstMiggD")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -6,6 +6,22 @@ a, .btn-link {
     color: #006bb7;
 }
 
+.nav-scrollable {
+    background-color: #1b6ec2; /* azul escuro */
+    color: white; /* texto branco */
+    min-height: 100vh; /* garante que ocupe a tela toda */
+    padding-top: 1rem;
+}
+
+label {
+    color: white !important;
+}
+
+.table {
+    background-color: white !important;
+    color: black !important;
+}
+
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
