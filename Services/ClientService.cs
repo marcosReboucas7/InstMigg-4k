@@ -54,7 +54,6 @@ namespace InstMiggD.Services
                 .ToListAsync();
         }
 
-
         public async Task<Client> CreateClientAsync(Client client)
         {
             _context.Clients.Add(client);
@@ -64,9 +63,30 @@ namespace InstMiggD.Services
 
         public async Task<Client> UpdateClientAsync(Client client)
         {
-            _context.Clients.Update(client);
+            // Primeiro, verifique se já existe uma entrada rastreada com esse Id
+            var trackedEntry = _context.ChangeTracker
+                                       .Entries<Client>()
+                                       .FirstOrDefault(e => e.Entity.Id == client.Id);
+
+            if (trackedEntry != null)
+            {
+                // Se já existe uma entidade rastreada, atualize seus valores
+                trackedEntry.CurrentValues.SetValues(client);
+                await _context.SaveChangesAsync();
+                return (Client)trackedEntry.Entity;
+            }
+
+            // Caso não haja uma instância rastreada, carregue a existente do banco
+            var existing = await _context.Clients.FindAsync(client.Id);
+            if (existing == null)
+            {
+                throw new KeyNotFoundException($"Cliente com ID {client.Id} não encontrado para atualização.");
+            }
+
+            // Copia os valores do DTO para a entidade rastreada
+            _context.Entry(existing).CurrentValues.SetValues(client);
             await _context.SaveChangesAsync();
-            return client;
+            return existing;
         }
 
         public async Task<bool> DeleteClientAsync(int id)

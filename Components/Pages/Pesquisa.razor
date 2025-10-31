@@ -1,0 +1,245 @@
+﻿@page "/pesquisa"
+@using InstMiggD.Entities
+@using InstMiggD.Services
+@rendermode InteractiveServer
+@inject IClientService ClientService
+
+
+<h3>Pesquisar Clientes</h3>
+<hr />
+
+@if (editando)
+{
+    <div class="card p-3 mb-4 shadow-sm">
+        <h5>Editar Cliente</h5>
+        <EditForm Model="@clienteEdicao" OnValidSubmit="@SalvarEdicao">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="row">
+                <div class="col-md-4 mb-2">
+                    <label>Nome</label>
+                    <InputText class="form-control" @bind-Value="clienteEdicao.Name" />
+                </div>
+
+                <div class="col-md-4 mb-2">
+                    <label>Vendedor</label>
+                    <InputText class="form-control" @bind-Value="clienteEdicao.CreatedBy" />
+                </div>
+
+                <div class="col-md-4 mb-2">
+                    <label>Tipo</label>
+                    <InputSelect class="form-control" @bind-Value="clienteEdicao.Type">
+                        <option value="">Selecione...</option>
+                        <option value="@ClientType.Instalacao">Instalação</option>
+                        <option value="@ClientType.Migracao">Migração</option>
+                    </InputSelect>
+                </div>
+
+                <div class="col-md-3 mb-2">
+                    <label>Data</label>
+                    <InputDate class="form-control" @bind-Value="clienteEdicao.CreatedAt" />
+                </div>
+
+                @if (clienteEdicao.Type == ClientType.Instalacao)
+                {
+                    <div class="col-md-3 mb-2">
+                        <label>Valor</label>
+                        <InputNumber class="form-control" @bind-Value="clienteEdicao.Price" />
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <label>Contrato</label>
+                        <InputText class="form-control" @bind-Value="clienteEdicao.Contract" />
+                    </div>
+                }
+                else if (clienteEdicao.Type == ClientType.Migracao)
+                {
+                    <div class="col-md-3 mb-2">
+                        <label>Novo Valor</label>
+                        <InputNumber class="form-control" @bind-Value="clienteEdicao.NewPrice" />
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <label>Novo Contrato</label>
+                        <InputText class="form-control" @bind-Value="clienteEdicao.NewContract" />
+                    </div>
+                }
+            </div>
+
+            <button type="submit" class="btn btn-success me-2">Salvar</button>
+            <button type="button" class="btn btn-secondary" @onclick="CancelarEdicao">Cancelar</button>
+        </EditForm>
+    </div>
+}
+
+<div class="row mb-3">
+    <div class="col-md-4">
+        <label for="nome">Nome</label>
+        <InputText id="nome" class="form-control" @bind-Value="filtroNome" />
+    </div>
+
+    <div class="col-md-4">
+        <label for="vendedor">Vendedor</label>
+        <InputText id="vendedor" class="form-control" @bind-Value="filtroVendedor" />
+    </div>
+
+    <div class="col-md-3">
+        <label for="mes">Mês</label>
+        <InputSelect id="mes" class="form-control" @bind-Value="filtroMes">
+            <option value="">Todos</option>
+            @for (int i = 1; i <= 12; i++)
+            {
+                <option value="@i">@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i)</option>
+            }
+        </InputSelect>
+    </div>
+</div>
+
+<button class="btn btn-primary mb-3" @onclick="PesquisarClientes">Pesquisar</button>
+
+@if (clientes is null)
+{
+    <p>Carregando clientes...</p>
+}
+else if (!clientes.Any())
+{
+    <p class="text-muted">Nenhum cliente encontrado.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Vendedor</th>
+                <th>Tipo</th>
+                <th>Data</th>
+                <th>Valor</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in clientes)
+            {
+                <tr>
+                    <td>@c.Name</td>
+                    <td>@c.CreatedBy</td>
+                    <td>@c.Type</td>
+                    <td>@c.CreatedAt.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        @if (c.Type == ClientType.Instalacao)
+                        {
+                            @c.Price.ToString("C")
+                        }
+                        else if (c.Type == ClientType.Migracao)
+                        {
+                            @c.NewPrice.ToString("C")
+                        }
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-warning me-2" @onclick="() => EditarCliente(c)">Editar</button>
+                        <button class="btn btn-sm btn-danger" @onclick="() => ConfirmarExclusao(c.Id)">Excluir</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (!string.IsNullOrEmpty(mensagem))
+{
+    <div class="alert alert-info mt-3">@mensagem</div>
+}
+
+@code {
+    private IEnumerable<Client>? clientes;
+    private string? filtroNome;
+    private string? filtroVendedor;
+    private string? filtroMes;
+    private string? mensagem;
+
+    private bool editando = false;
+    private Client clienteEdicao = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        clientes = await ClientService.GetAllClientsAsync();
+    }
+
+    private async Task PesquisarClientes()
+    {
+        var anoAtual = DateTime.Now.Year;
+
+        if (!string.IsNullOrWhiteSpace(filtroVendedor) && int.TryParse(filtroMes, out int mes))
+            clientes = await ClientService.GetClientsByUserAndMonthAsync(filtroVendedor, mes, anoAtual);
+        else if (!string.IsNullOrWhiteSpace(filtroVendedor))
+            clientes = await ClientService.GetClientsByUserAsync(filtroVendedor);
+        else if (int.TryParse(filtroMes, out mes))
+            clientes = await ClientService.GetClientsByMonthAsync(mes, anoAtual);
+        else
+            clientes = await ClientService.GetAllClientsAsync();
+
+        if (!string.IsNullOrWhiteSpace(filtroNome))
+            clientes = clientes.Where(c => c.Name.Contains(filtroNome, StringComparison.OrdinalIgnoreCase)).ToList();
+    }
+
+    private void EditarCliente(Client cliente)
+    {
+        clienteEdicao = new Client
+        {
+            Id = cliente.Id,
+            Name = cliente.Name,
+            CreatedBy = cliente.CreatedBy,
+            Type = cliente.Type,
+            CreatedAt = cliente.CreatedAt,
+            Price = cliente.Price,
+            Contract = cliente.Contract,
+            NewPrice = cliente.NewPrice,
+            NewContract = cliente.NewContract
+        };
+        editando = true;
+        mensagem = null;
+    }
+
+    private async Task SalvarEdicao()
+    {
+        try
+        {
+            await ClientService.UpdateClientAsync(clienteEdicao);
+            mensagem = "Cliente atualizado com sucesso!";
+            editando = false;
+            clientes = await ClientService.GetAllClientsAsync();
+        }
+        catch (Exception ex)
+        {
+            mensagem = $"Erro ao atualizar: {ex.Message}";
+        }
+    }
+
+    private void CancelarEdicao()
+    {
+        editando = false;
+        clienteEdicao = new();
+    }
+
+    private async Task ConfirmarExclusao(int id)
+    {
+        var confirmado = await JSRuntime.InvokeAsync<bool>("confirm", $"Deseja realmente excluir o cliente #{id}?");
+        if (confirmado)
+        {
+            var sucesso = await ClientService.DeleteClientAsync(id);
+            if (sucesso)
+            {
+                mensagem = "Cliente excluído com sucesso!";
+                clientes = await ClientService.GetAllClientsAsync();
+            }
+            else
+            {
+                mensagem = "Erro ao excluir o cliente.";
+            }
+        }
+    }
+
+    [Inject] private IJSRuntime JSRuntime { get; set; } = default!;
+}

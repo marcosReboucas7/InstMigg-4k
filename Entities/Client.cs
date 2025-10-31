@@ -13,7 +13,7 @@ namespace InstMiggD.Entities
     {
         [Key]
         public int Id { get; set; }
-        public string? Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         // Vai definir se vai ser instalação ou migração
         public ClientType Type { get; set; } = ClientType.Instalacao;
         // Nome do vendedor
