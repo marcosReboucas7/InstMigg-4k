@@ -1,6 +1,6 @@
+wwwroot\app.css
 wwwroot\bootstrap\bootstrap.min.css
 wwwroot\bootstrap\bootstrap.min.css.map
 wwwroot\favicon.png
 wwwroot\img\instMiggLogo.jpeg
 wwwroot\img\style.css
-wwwroot\app.css

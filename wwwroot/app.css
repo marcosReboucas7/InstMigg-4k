@@ -13,10 +13,6 @@ a, .btn-link {
     padding-top: 1rem;
 }
 
-label {
-    color: white !important;
-}
-
 .table {
     background-color: white !important;
     color: black !important;
